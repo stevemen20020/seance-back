@@ -6,5 +6,7 @@ export const ErrorMessage = {
   emailRepeated:'Email exists in database',
   numberIdNotProvided:'The ID provided is not a number',
   notFound:'Requested element not found',
+  InvalidToken:"Invalid token",
+  ExpiredToken:'The token has expired',
   error: "Idk what happened",
 };
