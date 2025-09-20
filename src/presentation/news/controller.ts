@@ -54,6 +54,10 @@ export class NewsController {
 
             if(!id) throw AppCustomError.badRequest(ErrorMessage['numberIdNotProvided'])
 
+            const imagePath = req.file ? req.file.filename : 'path undefined'
+
+            req.body.image = imagePath
+
             const body = NewsDtoValidator.validateUpdateNewsDto(req.body)
             
             const data = await this.repository.updateNews(body, id)
@@ -70,8 +74,15 @@ export class NewsController {
 
     create = async (req:Request, res:Response, next:NextFunction) => {
         try {
+
+            const imagePath = req.file ? req.file.filename : 'path undefined'
+
+            req.body.image = imagePath
+
             const body = NewsDtoValidator.validateCreateNewsDto(req.body)
-            
+
+            console.log(body)
+
             const data = await this.repository.createNews(body)
 
             res.json({
