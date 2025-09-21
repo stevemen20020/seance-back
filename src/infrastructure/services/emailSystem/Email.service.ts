@@ -22,7 +22,6 @@ export class EmailService {
         mailerEmail: string,
         senderEmailPassword: string
     ) {
-        console.log(mailerEmail, mailerHost, senderEmailPassword)
         this.sender = mailerEmail;
         
         this.transporter = nodemailer.createTransport( {
@@ -54,7 +53,7 @@ export class EmailService {
 
             return true;
         } catch ( error ) {
-            console.log(error);
+            console.error(error);
             return false;
         }
 

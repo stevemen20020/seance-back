@@ -33,7 +33,7 @@ export class Server {
     this.app.use(urlencoded({ extended: true }));
 
     /* Routes */
-    //this.app.use("/character-image", express.static("./public/characters"));
+    this.app.use("/news-images", express.static("./public/images/uploads/news"));
 
     
     this.app.use(AppRoutes.routes);

@@ -7,5 +7,6 @@ export const env = {
     COMPANY_MAIL: get('COMPANY_MAIL').default('seance_mail@yopmail.com').asString(),
     MAILER_HOST: get('MAILER_HOST').default('SMTP').asString(),
     MAILER_EMAIL: get('MAILER_EMAIL').default('seance_mail@yopmail.com').asString(),
-    MAILER_SECRET_KEY: get('MAILER_SECRET_KEY').default('').asString()
+    MAILER_SECRET_KEY: get('MAILER_SECRET_KEY').default('').asString(),
+    DOMAIN: get('DOMAIN').default('http://localhost:3000/').asString()
 }

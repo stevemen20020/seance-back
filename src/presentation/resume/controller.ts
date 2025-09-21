@@ -10,8 +10,6 @@ export class ResumeController {
 
             const resumePath = req.file ? req.file.filename : 'path undefined'
 
-            console.log(resumePath, req.file)
-
             req.body.resume = resumePath
 
             const body = ResumeDtoValidator.validateSendResumeDto(req.body)

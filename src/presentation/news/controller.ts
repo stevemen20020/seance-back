@@ -81,8 +81,6 @@ export class NewsController {
 
             const body = NewsDtoValidator.validateCreateNewsDto(req.body)
 
-            console.log(body)
-
             const data = await this.repository.createNews(body)
 
             res.json({
