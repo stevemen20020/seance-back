@@ -14,17 +14,15 @@ export class ResumeDatasourceImplementation implements ResumeDatasource{
     }
 
     async sendResume(dto: SendResumeDto): Promise<string> {
-        const { phone, email, name, resume} = dto
+        const { phone, email, name, resume, message } = dto
 
         
 
-        const filePath = path.join(
+        const filePath = resume ? path.join(
             __dirname,
             "../../../../public/documents/uploads/resumes",
             resume
-            );
-        
-            console.log(filePath)
+            ) : ''        
 
         const attachments = resume
             ? [{ filename: resume || "document.pdf", path: filePath }]
@@ -34,30 +32,39 @@ export class ResumeDatasourceImplementation implements ResumeDatasource{
         const options = {
             to: this.companyMail,
             subject: "Resume sending",
-            htmlBody: `name: ${name}, email: ${email}, phone: ${phone}`,
-            attachments
+            htmlBody: `<html>
+            
+                <span>name: ${name}</span>
+                <span>email: ${email}</span>
+                <span>phone: ${phone}</span>
+                ${message ? `<p>${message}</p>`:''}
+            
+            </html>`,
+            attachments: (resume && resume !== 'path undefined') ? attachments : []
         };
-
-        console.log('OPTIONS', options)
 
         const sentEmail = await this.emailService.sendEmail(options)
 
         if(!sentEmail) throw AppCustomError.internalServerError(ErrorMessage['EmailNotSent'])
 
-        const imagePath = path.join(
-            __dirname,
-            "../../../../public/documents/uploads/resumes/", // ajusta según tu estructura
-            resume
-        );
+        if(resume && resume !== 'path undefined'){
+            const imagePath = path.join(
+                __dirname,
+                "../../../../public/documents/uploads/resumes/", // ajusta según tu estructura
+                resume
+            );
 
-        try {
-            if (fs.existsSync(imagePath)) {
-                await fs.promises.unlink(imagePath);
-                console.log("Curriculum eliminado:", imagePath);
+            try {
+                if (fs.existsSync(imagePath)) {
+                    await fs.promises.unlink(imagePath);
+                    console.log("Curriculum eliminado:", imagePath);
+                }
+            } catch (err) {
+                console.error("Error al eliminar el curriculum:", err);
             }
-        } catch (err) {
-            console.error("Error al eliminar el curriculum:", err);
         }
+
+        
 
         return 'Email sent successfully'
     }

@@ -14,7 +14,7 @@ export class AppRoutes {
 
         router.use('/news', NewsRoutes.routes);
 
-        router.use('/resume', ResumeRoutes.routes)
+        router.use('/email', ResumeRoutes.routes)
         return router;
 
     }
