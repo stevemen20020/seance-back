@@ -76,7 +76,6 @@ export class NewsDatasourceImplementation implements NewsDatasource{
                 try {
                     if (fs.existsSync(imagePath)) {
                         await fs.promises.unlink(imagePath);
-                        console.log("Imagen eliminada:", imagePath);
                     }
                 } catch (err) {
                     console.error("Error al eliminar imagen:", err);
@@ -107,7 +106,6 @@ export class NewsDatasourceImplementation implements NewsDatasource{
             try {
                 if (fs.existsSync(imagePath)) {
                     await fs.promises.unlink(imagePath);
-                    console.log("Imagen eliminada:", imagePath);
                 }
             } catch (err) {
                 console.error("Error al eliminar imagen:", err);

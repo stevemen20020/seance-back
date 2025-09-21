@@ -57,7 +57,6 @@ export class ResumeDatasourceImplementation implements ResumeDatasource{
             try {
                 if (fs.existsSync(imagePath)) {
                     await fs.promises.unlink(imagePath);
-                    console.log("Curriculum eliminado:", imagePath);
                 }
             } catch (err) {
                 console.error("Error al eliminar el curriculum:", err);
