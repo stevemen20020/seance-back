@@ -3,7 +3,7 @@ import { NewsController } from "./controller";
 import { NewsDatasourceImplementation } from "../../infrastructure/datasources/news/news.datasource.impl";
 import { NewsRepositoryImplementation } from "../../infrastructure/repositories/news/news.repository.impl";
 import { AuthMiddleware } from "../middleware/auth.middleware";
-import { uploadMiddleware } from "../../infrastructure/fileSystem/FileStorage.service";
+import { uploadMiddleware } from "../../infrastructure/services/fileSystem/FileStorage.service";
 
 
 export class NewsRoutes {

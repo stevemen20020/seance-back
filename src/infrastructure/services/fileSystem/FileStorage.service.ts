@@ -2,14 +2,12 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-const uploadPath = path.join(__dirname, "../../../public/images/uploads/news");
+const uploadPath = path.join(__dirname, "../../../../public/images/uploads/news");
 
-// Crea la carpeta si no existe
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
 
-// Configuración de multer
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
     cb(null, uploadPath);

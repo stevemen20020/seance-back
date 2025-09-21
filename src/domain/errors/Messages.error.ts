@@ -8,5 +8,6 @@ export const ErrorMessage = {
   notFound:'Requested element not found',
   InvalidToken:"Invalid token",
   ExpiredToken:'The token has expired',
+  EmailNotSent: 'Email was not sent',
   error: "Idk what happened",
 };
