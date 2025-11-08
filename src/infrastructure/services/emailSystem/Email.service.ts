@@ -53,6 +53,7 @@ export class EmailService {
 
             return true;
         } catch ( error ) {
+            throw new Error(JSON.stringify(error));
             console.error(error);
             return false;
         }
