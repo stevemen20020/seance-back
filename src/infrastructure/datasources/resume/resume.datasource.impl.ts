@@ -45,7 +45,8 @@ export class ResumeDatasourceImplementation implements ResumeDatasource{
 
         const sentEmail = await this.emailService.sendEmail(options)
 
-        if(!sentEmail) throw AppCustomError.internalServerError(ErrorMessage['EmailNotSent'])
+        // if(!sentEmail) throw AppCustomError.internalServerError(ErrorMessage['EmailNotSent'])
+        if(!sentEmail) throw AppCustomError.internalServerError(JSON.stringify(options))
 
         if(resume && resume !== 'path undefined'){
             const imagePath = path.join(
