@@ -14,59 +14,66 @@ export class ResumeDatasourceImplementation implements ResumeDatasource{
     }
 
     async sendResume(dto: SendResumeDto): Promise<string> {
-        const { phone, email, name, resume, message } = dto
+        const { phone, email, name, resume, message } = dto;
 
-        
-
-        const filePath = resume ? path.join(
-            __dirname,
-            "../../../../public/documents/uploads/resumes",
-            resume
-            ) : ''        
+        const filePath = resume
+            ? path.join(__dirname, "../../../../public/documents/uploads/resumes", resume)
+            : "";
 
         const attachments = resume
             ? [{ filename: resume || "document.pdf", path: filePath }]
             : [];
 
-
         const options = {
             to: this.companyMail,
             subject: "Resume sending",
-            htmlBody: `<html>
-            
+            htmlBody: `
+            <html>
                 <span>name: ${name}</span>
                 <span>email: ${email}</span>
                 <span>phone: ${phone}</span>
-                ${message ? `<p>${message}</p>`:''}
-            
-            </html>`,
-            attachments: (resume && resume !== 'path undefined') ? attachments : []
+                ${message ? `<p>${message}</p>` : ""}
+            </html>
+            `,
+            attachments: (resume && resume !== "path undefined") ? attachments : []
         };
 
-        const sentEmail = await this.emailService.sendEmail(options)
+        try {
+            const sentEmail = await this.emailService.sendEmail(options);
 
-        // if(!sentEmail) throw AppCustomError.internalServerError(ErrorMessage['EmailNotSent'])
-        if(!sentEmail) throw AppCustomError.internalServerError(JSON.stringify(options))
+            if (!sentEmail) {
+                throw new Error("Email service returned a falsy response");
+            }
 
-        if(resume && resume !== 'path undefined'){
-            const imagePath = path.join(
-                __dirname,
-                "../../../../public/documents/uploads/resumes/", // ajusta según tu estructura
-                resume
-            );
+            // Eliminamos el archivo si fue enviado
+            if (resume && resume !== "path undefined") {
+                const imagePath = path.join(
+                    __dirname,
+                    "../../../../public/documents/uploads/resumes/",
+                    resume
+                );
 
-            try {
                 if (fs.existsSync(imagePath)) {
                     await fs.promises.unlink(imagePath);
                 }
-            } catch (err) {
-                console.error("Error al eliminar el curriculum:", err);
             }
+
+            return "Email sent successfully";
+
+        } catch (err: any) {
+            console.error("Error sending email:", err);
+
+            // 🔍 Detalle extendido para el log o para respuesta controlada
+            const detailedError = {
+                message: "Failed to send resume email",
+                reason: err.message || "Unknown error",
+                stack: err.stack,
+                options, // Opcional: muestra los datos enviados
+            };
+
+            throw AppCustomError.internalServerError(JSON.stringify(detailedError, null, 2));
         }
-
-        
-
-        return 'Email sent successfully'
     }
+
 
 }
