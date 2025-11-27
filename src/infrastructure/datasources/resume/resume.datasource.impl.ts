@@ -29,11 +29,77 @@ export class ResumeDatasourceImplementation implements ResumeDatasource{
             subject: "Resume sending",
             htmlBody: `
             <html>
-                <span>name: ${name}</span>
-                <span>email: ${email}</span>
-                <span>phone: ${phone}</span>
-                ${message ? `<p>${message}</p>` : ""}
+                <body style="
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f6fa;
+                    padding: 20px;
+                ">
+                    <div style="
+                    max-width: 500px;
+                    margin: auto;
+                    background: white;
+                    border-radius: 12px;
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+                    overflow: hidden;
+                    border: 1px solid #e0e6f0;
+                    ">
+                    
+                    <!-- Header azul -->
+                    <div style="
+                        background: #0a2a66; /* azul oscuro */
+                        color: white;
+                        padding: 20px;
+                        text-align: center;
+                    ">
+                        <h2 style="margin: 0; font-size: 22px;">
+                        Nuevo mensaje desde seancecorp.com
+                        </h2>
+                    </div>
+
+                    <!-- Contenido -->
+                    <div style="padding: 25px; color: #1a1a1a;">
+
+                        <p style="margin: 0 0 12px;">
+                        <strong style="color: #0a2a66;">Nombre:</strong> ${name}
+                        </p>
+
+                        <p style="margin: 0 0 12px;">
+                        <strong style="color: #0a2a66;">Email:</strong> ${email}
+                        </p>
+
+                        <p style="margin: 0 0 20px;">
+                        <strong style="color: #0a2a66;">Teléfono:</strong> ${phone}
+                        </p>
+
+                        ${message ? `
+                        <div style="
+                            background: #e8effc; 
+                            border-left: 4px solid #0a2a66; 
+                            padding: 15px;
+                            border-radius: 6px;
+                            color: #0a2a66;
+                        ">
+                            <p style="margin: 0; white-space: pre-line;">${message}</p>
+                        </div>
+                        ` : ""}
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="
+                        text-align: center;
+                        font-size: 12px;
+                        color: #7a7a7a;
+                        padding: 15px 0;
+                        background: #f0f3fa;
+                    ">
+                        Este mensaje fue enviado desde el formulario de contacto en https://seancecorp.com.
+                    </div>
+
+                    </div>
+                </body>
             </html>
+
             `,
             attachments: (resume && resume !== "path undefined") ? attachments : []
         };
